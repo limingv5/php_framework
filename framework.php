@@ -22,35 +22,39 @@ class Framework
 	}
 
 	public static function init() {
+		self::$instance->checkHTTPMethod();
+
 		if (self::$instance == NULL) {
 			self::$instance = new self();
 		}
 		
-		self::$instance->checkHTTPMethod();
-		self::$instance->ifDefault();
+		if (!empty($_GET)) {
+			$_GET = self::$instance->tideInputs($_GET);
+		}
+		if (!empty($_POST)) {
+			$_POST = self::$instance->tideInputs($_POST);
+		}
 		
 		$path = preg_replace("/^\/|\/$/", '', $_SERVER['PATH_INFO']);
 		$arr  = explode('/', $path);
-
-		if (count($arr)>=2) {
-			if (!empty($_GET)) {
-				$_GET = self::$instance->tideInputs($_GET);
-			}
-			if (!empty($_POST)) {
-				$_POST = self::$instance->tideInputs($_POST);
-			}
-
+		if (isset($arr[0]) && $arr[0]) {
 			$classname = ucfirst($arr[0]).self::CONTROLLER_SUFFIX;
-			$funcname  = $arr[1];
-
-			unset($arr[0], $arr[1]);
-
-			$args = self::$instance->tideInputs(array_values($arr));
-			self::$instance->invoke($classname, $funcname, $args);
+			unset($arr[0]);
 		}
 		else {
-			self::$instance->setHeaders(416);
+			$classname = self::DEFAULT_CONTROLLER;
 		}
+
+		if (isset($arr[1]) && $arr[1]) {
+			$funcname  =  $arr[1];
+			unset($arr[1]);
+		}
+		else {
+			$funcname  =  self::DEFAULT_METHOD;
+		}
+
+		$args = self::$instance->tideInputs(array_values($arr));
+		self::$instance->invoke($classname, $funcname, $args);
 	}
 
 	private function invoke($classname, $funcname, $args=array()) {
@@ -78,13 +82,6 @@ class Framework
 	private function checkHTTPMethod() {
 		if (!in_array($_SERVER['REQUEST_METHOD'], array("GET", "POST", "PUT", "DELETE"))) {
 			self::$instance->setHeaders(406);
-		}
-	}
-
-	private function ifDefault() {
-		if (!isset($_SERVER['PATH_INFO'])) {
-			self::$instance->invoke(self::DEFAULT_CONTROLLER, self::DEFAULT_METHOD);
-			exit;
 		}
 	}
 
