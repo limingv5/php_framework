@@ -22,12 +22,12 @@ class Framework
 	}
 
 	public static function init() {
-		self::$instance->checkHTTPMethod();
-
 		if (self::$instance == NULL) {
 			self::$instance = new self();
 		}
 		
+		self::$instance->checkHTTPMethod();
+
 		if (!empty($_GET)) {
 			$_GET = self::$instance->tideInputs($_GET);
 		}
