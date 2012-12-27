@@ -59,12 +59,29 @@ class Framework
 
 	private function invoke($classname, $funcname, $args=array()) {
 		if (class_exists($classname)) {
-			$c = new $classname();
-			if (method_exists($c, $funcname)) {
+			$class = new ReflectionClass($classname);
+			/* If Constructor wants Parameters:
+			$c = $class->getConstructor();
+			$n = $c->getNumberOfRequiredParameters();
+			if ($n>0) {
+				$arr = array_chunk($args, $n, false);
+				$constructorArg = $arr[0];
+				$methodArg = isset($arr[1]) ? $arr[1] : array();
+			}
+			else {
+				$constructorArg = array();
+				$methodArg = $args;
+			}
+			*/
+			$constructorArg = array();
+			$methodArg      = $args;
+			
+			$obj = $class->newInstanceArgs($constructorArg);
+			if (method_exists($obj, $funcname)) {
 				self::$instance->setHeaders(200);
 				$method = new ReflectionMethod($classname, $funcname);
-				if (count($args) >= $method->getNumberOfRequiredParameters()) {
-					$method->invokeArgs($c, $args);
+				if (count($methodArg) >= $method->getNumberOfRequiredParameters()) {
+					$method->invokeArgs($obj, $methodArg);
 				}
 				else {
 					self::$instance->setHeaders(412);
