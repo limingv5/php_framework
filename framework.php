@@ -16,7 +16,7 @@ class Framework
 	}
 
 	public static function loader($dir, $classname, $ext=".php") {
-		set_include_path(dirname(__FILE__).PATH_SEPARATOR.$dir.PATH_SEPARATOR);
+		set_include_path(dirname(__FILE__).DIRECTORY_SEPARATOR.$dir.DIRECTORY_SEPARATOR);
 		spl_autoload_extensions($ext);
 		spl_autoload($classname);
 	}
