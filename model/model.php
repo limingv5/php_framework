@@ -7,7 +7,7 @@ class Model
 	
 	function __construct($isdb=true) {
 		if ($isdb) {
-			include dirname(__FILE__)."/../config.php";
+			include_once dirname(__FILE__)."/../config.php";
 
 			$this->runtime = new PDO(
 				"mysql:host=".DB_HOST.";dbname=".DB_NAME,

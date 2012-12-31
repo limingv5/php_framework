@@ -22,11 +22,14 @@ class API
 	 */
 	public function index() {
 		header("Content-Type: text/html");
-
+		
+		preg_match("/^\/(.+)\//U", $_SERVER['REQUEST_URI'], $matches);
+		$path = $matches[0];
+		
 		echo "<h1>Class List</h1><ul>";
 		foreach (glob(dirname(__FILE__)."/*".strtolower(Framework::CONTROLLER_SUFFIX).Framework::EXTENSION) as $class) {
 			$class = preg_replace("/_.+/", '', basename($class));
-			echo '<li><a href="'.$class.'/intro">'.$class."</a></li>";
+			echo '<li><a href="'.$path.$class.'/intro">'.$class."</a></li>";
 		}
 		echo "</ul>";
 	}
