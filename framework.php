@@ -6,6 +6,7 @@ class Framework
 	const DEFAULT_CONTROLLER = "api";
 	const DEFAULT_METHOD     = "index";
 	const CONTROLLER_SUFFIX  = "_API";
+	const EXTENSION          = ".php";
 
 	function __construct() {
 		spl_autoload_register(array($this, "controller"));
@@ -15,9 +16,9 @@ class Framework
 		self::loader(__FUNCTION__, $classname);
 	}
 
-	public static function loader($dir, $classname, $ext=".php") {
+	public static function loader($dir, $classname) {
 		set_include_path(dirname(__FILE__).DIRECTORY_SEPARATOR.$dir.DIRECTORY_SEPARATOR);
-		spl_autoload_extensions($ext);
+		spl_autoload_extensions(self::EXTENSION);
 		spl_autoload($classname);
 	}
 
@@ -183,7 +184,7 @@ class Framework
 		$header_status = isset($status[$code]) ? $status[$code] : $status[500];
 
 		header("HTTP/1.1 ".$code." ".$header_status);
-		header("Content-Type: application/json");
+		header("Content-Type: application/json", false);
 		if ($code >= 300) {
 			exit;
 		}
