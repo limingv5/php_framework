@@ -9,10 +9,17 @@ class API
 		Framework::loader(__FUNCTION__, $classname);
 	}
 
+	/**
+	 * create JSON format string
+	 * JSON_NUMERIC_CHECK is for number format converting
+	 */
 	public function toJSON($data) {
 		echo json_encode($data, JSON_NUMERIC_CHECK);
 	}
 
+	/**
+	 * Class List for the developers
+	 */
 	public function index() {
 		header("Content-Type: text/html");
 
@@ -24,6 +31,9 @@ class API
 		echo "</ul>";
 	}
 	
+	/**
+	 * Method List/Detail for the developers
+	 */
 	public function get_intro($funcname=null) {
 		header("Content-Type: text/html");
 
