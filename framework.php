@@ -46,7 +46,7 @@ class Framework
 		}
 
 		if (isset($arr[1]) && $arr[1]) {
-			$funcname  =  $arr[1];
+			$funcname  = strtolower($_SERVER['REQUEST_METHOD']).'_'.$arr[1];
 			unset($arr[1]);
 		}
 		else {
@@ -84,7 +84,7 @@ class Framework
 					$method->invokeArgs($obj, $methodArg);
 				}
 				else {
-					self::$instance->setHeaders(412);
+					self::$instance->setHeaders(400);
 				}
 			}
 			else {
