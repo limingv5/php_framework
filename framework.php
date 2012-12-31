@@ -36,6 +36,7 @@ class Framework
 			$_POST = self::$instance->tideInputs($_POST);
 		}
 		
+		$_SERVER['PATH_INFO'] = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
 		$path = preg_replace("/^\/|\/$/", '', $_SERVER['PATH_INFO']);
 		$arr  = explode('/', $path);
 		if (isset($arr[0]) && $arr[0]) {
