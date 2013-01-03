@@ -56,6 +56,7 @@ class API
 			}
 			else {
 				$regx = "/^((get_)|(post_)|(put_)|(delete_))/";
+				
 				echo "<h1>Method List</h1><ul>";
 				foreach ($class->getMethods() as $func) {
 					if ($func->isPublic() && $func->name != __FUNCTION__ && preg_match($regx, $func->name)) {
