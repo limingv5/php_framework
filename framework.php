@@ -183,10 +183,10 @@ class Framework
 		
 		$code = intval($code);
 		$header_status = isset($status[$code]) ? $status[$code] : $status[500];
-
-		header("HTTP/1.1 ".$code." ".$header_status);
+		
+		header("HTTP/1.1 {$code} {$header_status}");
 		header("Content-Type: application/json", false);
-		if ($code >= 300) {
+		if ($code >= 400) {
 			exit;
 		}
 	}
