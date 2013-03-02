@@ -83,6 +83,10 @@ class Framework
 			$obj = $class->newInstanceArgs($constructorArg);
 			if (method_exists($obj, $funcname)) {
 				self::$instance->setHeaders(200);
+				if (strtolower($_SERVER['REQUEST_METHOD']) == "head") {
+					exit;
+				}
+				
 				$method = new ReflectionMethod($classname, $funcname);
 				if (count($methodArg) >= $method->getNumberOfRequiredParameters()) {
 					$method->invokeArgs($obj, $methodArg);
