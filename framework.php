@@ -48,7 +48,9 @@ class Framework
 		}
 
 		if (isset($arr[1]) && $arr[1]) {
-			$funcname  = strtolower($_SERVER['REQUEST_METHOD']).'_'.$arr[1];
+			$req = strtolower($_SERVER['REQUEST_METHOD']);
+			$req = ($req == "head") ? "get" : $req;
+			$funcname  = $req.'_'.$arr[1];
 			unset($arr[1]);
 		}
 		else {
@@ -137,7 +139,8 @@ class Framework
 	}
 
 	private function setHeaders($code=500) {
-		header('', false, intval($code));
+		$code = intval($code);
+		header("HTTP/1.1 {$code}", false, $code);
 		if ($code >= 400) {
 			exit;
 		}
