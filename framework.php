@@ -137,8 +137,7 @@ class Framework
 	}
 
 	private function setHeaders($code=500) {
-		header("Status: $code");
-		header("Content-Type: application/json", false);
+		header('', false, intval($code));
 		if ($code >= 400) {
 			exit;
 		}
