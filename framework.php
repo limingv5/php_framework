@@ -64,6 +64,9 @@ class Framework
 	private function invoke($classname, $funcname, $args=array()) {
 		if (class_exists($classname)) {
 			$class = new ReflectionClass($classname);
+			
+			$constructorArg = array();
+			$methodArg      = $args;
 			/* If Constructor wants Parameters:
 			$c = $class->getConstructor();
 			$n = $c->getNumberOfRequiredParameters();
@@ -77,8 +80,6 @@ class Framework
 				$methodArg = $args;
 			}
 			*/
-			$constructorArg = array();
-			$methodArg      = $args;
 			
 			$obj = $class->newInstanceArgs($constructorArg);
 			if (method_exists($obj, $funcname)) {
