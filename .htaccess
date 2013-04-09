@@ -1,5 +1,3 @@
-<IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteCond $1 !^(index.php|medialib|icon|assets)
+RewriteCond $1 !^(index.php|view/js|view/css|view/img)
 RewriteRule ^(.*)$ index.php/$1 [L]
-</IfModule>
