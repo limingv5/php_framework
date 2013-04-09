@@ -21,13 +21,13 @@ class API
 	 * Class List for the developers
 	 */
 	public function index() {
-		header("Content-Type: text/html");
+		header("Content-Type: text/html", false);
 		
 		preg_match("/^\/(.+)\//U", $_SERVER['REQUEST_URI'], $matches);
 		$path = $matches[0];
 		
 		echo "<h1>Class List</h1><ul>";
-		foreach (glob(dirname(__FILE__)."/*".strtolower(Framework::CONTROLLER_SUFFIX).Framework::EXTENSION) as $class) {
+		foreach (glob(dirname(__FILE__)."/*_".strtolower(Framework::CONTROLLER_SUFFIX).Framework::EXTENSION) as $class) {
 			$class = preg_replace("/_.+/", '', basename($class));
 			echo '<li><a href="'.$path.$class.'/intro">'.$class."</a></li>";
 		}
@@ -38,7 +38,7 @@ class API
 	 * Method List/Detail for the developers
 	 */
 	public function get_intro($funcname=null) {
-		header("Content-Type: text/html");
+		header("Content-Type: text/html", false);
 
 		$classname = get_called_class();
 
