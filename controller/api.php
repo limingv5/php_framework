@@ -21,8 +21,6 @@ class API
 	 * Class List for the developers
 	 */
 	public function index() {
-		header("Content-Type: text/html", false);
-		
 		preg_match("/^\/(.+)\//U", $_SERVER['REQUEST_URI'], $matches);
 		$path = $matches[0];
 		
@@ -38,8 +36,6 @@ class API
 	 * Method List/Detail for the developers
 	 */
 	public function get_intro($funcname=null) {
-		header("Content-Type: text/html", false);
-
 		$classname = get_called_class();
 
 		if (class_exists($classname)) {
