@@ -67,8 +67,8 @@ class Framework
 			$class = new ReflectionClass($classname);
 			
 			$methodArg      = $args;
-			/* If Constructor wants Parameters:
 			$constructorArg = array();
+			/* If Constructor wants Parameters:
 			$c = $class->getConstructor();
 			$n = $c->getNumberOfRequiredParameters();
 			if ($n>0) {
