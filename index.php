@@ -1,4 +1,4 @@
 <?php
-require "framework.php";
+include "framework.php";
 Framework::init();
 ?>
