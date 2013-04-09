@@ -5,10 +5,11 @@ class Framework
 
 	const DEFAULT_CONTROLLER = "api";
 	const DEFAULT_METHOD     = "index";
-	const CONTROLLER_SUFFIX  = "_API";
+	const CONTROLLER_SUFFIX  = "API";
 	const EXTENSION          = ".php";
 
 	function __construct() {
+		include dirname(__FILE__)."/config.php";
 		spl_autoload_register(array($this, "controller"));
 	}
 
@@ -40,11 +41,11 @@ class Framework
 		$path = preg_replace("/^\/|\/$/", '', $_SERVER['PATH_INFO']);
 		$arr  = explode('/', $path);
 		if (isset($arr[0]) && $arr[0]) {
-			$classname = ucfirst($arr[0]).self::CONTROLLER_SUFFIX;
+			$classname = ucfirst($arr[0]).'_'.self::CONTROLLER_SUFFIX;
 			unset($arr[0]);
 		}
 		else {
-			$classname = self::DEFAULT_CONTROLLER;
+			$classname = self::DEFAULT_CONTROLLER.(strtolower(self::DEFAULT_CONTROLLER) != strtolower(self::CONTROLLER_SUFFIX) ? '_'.self::CONTROLLER_SUFFIX : '');
 		}
 
 		if (isset($arr[1]) && $arr[1]) {
@@ -65,9 +66,9 @@ class Framework
 		if (class_exists($classname)) {
 			$class = new ReflectionClass($classname);
 			
-			$constructorArg = array();
 			$methodArg      = $args;
 			/* If Constructor wants Parameters:
+			$constructorArg = array();
 			$c = $class->getConstructor();
 			$n = $c->getNumberOfRequiredParameters();
 			if ($n>0) {
