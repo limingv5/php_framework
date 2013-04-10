@@ -125,8 +125,8 @@ COMMON;
 	public static function render($html=array(), $obj=array(), $scalable=true) {
 		self::init($obj);
 
-		$title      = isset($obj['title']) ? $obj['title'] : "PHP";
-		$post_title = isset($obj['post_title']) ? $obj['post_title'] : "Framework";
+		$title      = isset($obj['title']) ? $obj['title'] : "网站";
+		$post_title = isset($obj['post_title']) ? $obj['post_title'] : "首页";
 		$icon       = isset($obj['icon']) ? $obj['icon'] : null;
 		self::header($title, $post_title, $icon, $scalable);
 		
