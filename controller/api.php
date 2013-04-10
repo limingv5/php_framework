@@ -35,7 +35,7 @@ class API
 		echo "<h1>Class List</h1><ul>";
 		foreach (glob(dirname(__FILE__)."/*_".strtolower(Framework::CONTROLLER_SUFFIX).Framework::EXTENSION) as $class) {
 			$class = preg_replace("/_.+/", '', basename($class));
-			echo '<li><a href="'.$path.$class.'/intro">'.$class."</a></li>";
+			echo '<li><a href="'.$path.$class.'/function">'.$class."</a></li>";
 		}
 		echo "</ul>";
 	}
@@ -43,7 +43,7 @@ class API
 	/**
 	 * Method List/Detail for the developers
 	 */
-	public function get_intro($funcname=null) {
+	public function get_function($funcname=null) {
 		$classname = get_called_class();
 
 		if (class_exists($classname)) {
@@ -60,10 +60,9 @@ class API
 			}
 			else {
 				$regx = "/^((get_)|(post_)|(put_)|(delete_))/";
-				
 				echo "<h1>Method List</h1><ul>";
 				foreach ($class->getMethods() as $func) {
-					if ($func->isPublic() && $func->name != __FUNCTION__ && preg_match($regx, $func->name)) {
+					if ($func->isPublic() && $func->class != __CLASS__ && preg_match($regx, $func->name)) {
 						echo '<li><a href="'.$path.$func->name.'">'.preg_replace($regx, '', $func->name)."</a></li>";
 					}
 				}
