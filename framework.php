@@ -3,7 +3,7 @@ class Framework
 {
 	private static $instance;
 
-	const DEFAULT_CONTROLLER = "api";
+	const DEFAULT_CONTROLLER = "test";
 	const DEFAULT_METHOD     = "index";
 	const CONTROLLER_SUFFIX  = "API";
 	const EXTENSION          = ".php";
@@ -41,12 +41,13 @@ class Framework
 		$path = preg_replace("/^\/|\/$/", '', $_SERVER['PATH_INFO']);
 		$arr  = explode('/', $path);
 		if (isset($arr[0]) && $arr[0]) {
-			$classname = ucfirst($arr[0]).'_'.self::CONTROLLER_SUFFIX;
+			$classname = ucfirst($arr[0]);
 			unset($arr[0]);
 		}
 		else {
-			$classname = self::DEFAULT_CONTROLLER.(strtolower(self::DEFAULT_CONTROLLER) != strtolower(self::CONTROLLER_SUFFIX) ? '_'.self::CONTROLLER_SUFFIX : '');
+			$classname = self::DEFAULT_CONTROLLER;
 		}
+		$classname = $classname.(strtolower($classname) != strtolower(self::CONTROLLER_SUFFIX) ? '_'.self::CONTROLLER_SUFFIX : '');
 
 		if (isset($arr[1]) && $arr[1]) {
 			$req = strtolower($_SERVER['REQUEST_METHOD']);

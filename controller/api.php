@@ -9,6 +9,14 @@ class API
 		Framework::loader(__FUNCTION__, $classname);
 	}
 
+	public function index() {
+		$this->get_index();
+	}
+
+	public function get_index() {
+		$this->get_class();
+	}
+
 	/**
 	 * create JSON format string
 	 * JSON_NUMERIC_CHECK is for number format converting
@@ -20,7 +28,7 @@ class API
 	/**
 	 * Class List for the developers
 	 */
-	public function index() {
+	public function get_class() {
 		preg_match("/^\/(.+)\//U", $_SERVER['REQUEST_URI'], $matches);
 		$path = $matches[0];
 		

@@ -1,5 +1,5 @@
 body,html{height: 100%;width: 100%}
-body{font:normal 14px Tahoma, Arial, sans-serif;color:#333;background-color: #000;}
+body{font:normal 14px Tahoma, Arial, sans-serif;color:#333;}
 body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,legend,table,td,th,img,div,dd,dt,dl{margin:0;padding:0;border:0;}
 ul,ol{list-style-type:none;}
 li,dl{list-style:none;}

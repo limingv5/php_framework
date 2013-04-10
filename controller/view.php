@@ -45,8 +45,10 @@ class View
 		else {
 			echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 		}
-
-		echo "<html><head><base href='".BASE."' />";
+		
+		$dir = str_replace("index.php", '', $_SERVER['SCRIPT_NAME']);
+		$base = "http://{$_SERVER['HTTP_HOST']}{$dir}view/";
+		echo "<html><head><base href='".$base."' />";
 
 		if (!self::isIE()) {
 			echo '<meta charset="utf-8" />';
