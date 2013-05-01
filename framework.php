@@ -11,6 +11,10 @@ class Framework
 	function __construct() {
 		include dirname(__FILE__)."/config.php";
 		spl_autoload_register(array($this, "controller"));
+
+		set_error_handler(function($level, $string) {
+			throw new Exception($string);
+		});
 	}
 
 	private function controller($classname) {
