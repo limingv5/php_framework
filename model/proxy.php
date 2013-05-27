@@ -18,9 +18,11 @@ class Proxy extends Model
 		if ($data) {
 			curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($data));
 		}
-		$result = curl_exec($this->curl);
+		return curl_exec($this->curl);
+	}
+	
+	function __destruct() {
 		curl_close($this->curl);
-		return $result;
 	}
 }
 ?>
