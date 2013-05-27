@@ -19,8 +19,8 @@ class Proxy extends Model
 			curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($data));
 		}
 		$result = curl_exec($this->curl);
-    curl_close($this->curl);
-    return $result;
+		curl_close($this->curl);
+		return $result;
 	}
 }
 ?>
