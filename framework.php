@@ -35,10 +35,14 @@ class Framework
 		self::$instance->checkHTTPMethod();
 
 		if (!empty($_GET)) {
-			$_GET = self::$instance->tideInputs($_GET);
+			$_GET = self::$instance->clean($_GET);
 		}
-		if (!empty($_POST)) {
-			$_POST = self::$instance->tideInputs($_POST);
+		else if (!empty($_POST)) {
+			$_POST = self::$instance->clean($_POST);
+		}
+		else {
+			parse_str(file_get_contents("php://input"), $arr);
+			$_POST = self::$instance->clean($arr);
 		}
 		
 		$_SERVER['PATH_INFO'] = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
@@ -63,7 +67,7 @@ class Framework
 			$funcname  =  self::DEFAULT_METHOD;
 		}
 
-		$args = self::$instance->tideInputs(array_values($arr));
+		$args = self::$instance->clean(array_values($arr));
 		self::$instance->invoke($classname, $funcname, $args);
 	}
 
@@ -132,21 +136,6 @@ class Framework
 			$clean_input = trim($data);
 		}
 		return $clean_input;
-	}
-
-	private function tideInputs($arr) {
-		switch($_SERVER['REQUEST_METHOD']){
-			case "POST":
-			case "GET":
-			case "DELETE":
-				$arr = self::$instance->clean($arr);
-				break;
-			case "PUT":
-				parse_str(file_get_contents("php://input"), $arr);
-				$arr = self::$instance->clean($arr);
-				break;
-		}
-		return $arr;
 	}
 
 	private function setHeaders($code=500) {
