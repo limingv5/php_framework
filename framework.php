@@ -28,6 +28,10 @@ class Framework
 	}
 
 	public static function init() {
+		if (strtolower($_SERVER['REQUEST_METHOD']) == "head") {
+			exit;
+		}
+		
 		if (self::$instance == NULL) {
 			self::$instance = new self();
 		}
@@ -59,7 +63,6 @@ class Framework
 
 		if (isset($arr[1]) && $arr[1]) {
 			$req = strtolower($_SERVER['REQUEST_METHOD']);
-			$req = ($req == "head") ? "get" : $req;
 			$funcname  = $req.'_'.$arr[1];
 			unset($arr[1]);
 		}
@@ -94,9 +97,6 @@ class Framework
 			$obj = $class->newInstanceArgs($constructorArg);
 			if (method_exists($obj, $funcname)) {
 				self::$instance->setHeaders(200);
-				if (strtolower($_SERVER['REQUEST_METHOD']) == "head") {
-					exit;
-				}
 				
 				$method = new ReflectionMethod($classname, $funcname);
 				if (count($methodArg) >= $method->getNumberOfRequiredParameters()) {
