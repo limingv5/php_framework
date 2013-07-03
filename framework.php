@@ -63,8 +63,15 @@ class Framework
 
 		if (isset($arr[1]) && $arr[1]) {
 			$req = strtolower($_SERVER['REQUEST_METHOD']);
+			$req = ($req == "head") ? "get" : $req;
 			$funcname  = $req.'_'.$arr[1];
 			unset($arr[1]);
+			
+			// curl统一以POST的形式传递参数（CURLOPT_POSTFIELDS），故在此做修正
+			if ($req=="get" && !empty($_POST)) {
+				$_GET = $_POST;
+				unset($_POST);
+			}
 		}
 		else {
 			$funcname  =  self::DEFAULT_METHOD;
