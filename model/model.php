@@ -12,7 +12,7 @@ class Model
 		date_default_timezone_set("Asia/Shanghai");
 	}
 
-	function __get($name) {
+	public function __get($name) {
 		return $this->prefix.$name;
 	}
 	
