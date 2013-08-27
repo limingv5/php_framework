@@ -12,9 +12,11 @@ class Framework
 		include dirname(__FILE__)."/config.php";
 		spl_autoload_register(array($this, "controller"));
 
-		set_error_handler(function($level, $string) {
-			throw new Exception($string);
-		});
+		set_error_handler("Framework::exception_handler");
+	}
+	
+	public static function exception_handler($level, $string) {
+		throw new Exception($string);
 	}
 
 	private function controller($classname) {
